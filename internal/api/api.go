@@ -22,5 +22,7 @@ func (a *Api) Get(url string) ([]byte, error) {
 		return nil, err
 	}
 
+	
+
 	return body, nil
 }

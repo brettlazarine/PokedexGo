@@ -10,7 +10,7 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(configPtr *Config) error
+	callback    func(configPtr *Config, arg ...string) error
 }
 type Config struct {
 	Next     string
@@ -42,6 +42,11 @@ func init() {
 			description: "Exit the Pokedex",
 			callback:    commandExit,
 		},
+		"explore": {
+			name:        "explore",
+			description: "Displays the names of Pokemon that can be found in a specific area. --explore <area> ",
+			callback:    commandExplore,
+		},
 	}
 }
 
@@ -50,15 +55,21 @@ func startREPL() {
 
 	for {
 		fmt.Print("Pokedex > ")
+		input := ""
+
 		scanner.Scan()
 
 		words := cleanInputString(scanner.Text())
 		if len(words) == 0 {
 			continue
 		}
+		if len(words) > 1 {
+			input = words[1]
+		}
+
 		command := words[0]
 		if cmd, ok := commands[command]; ok {
-			err := cmd.callback(configPtr)
+			err := cmd.callback(configPtr, input)
 			if err != nil {
 				fmt.Println(err)
 			}
