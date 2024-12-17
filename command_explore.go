@@ -8,7 +8,7 @@ import (
 
 func commandExplore(configPtr *Config, name ...string) error {
 	url := "https://pokeapi.co/api/v2/location-area/" + name[0]
-	if name == nil || len(name) == 0 {
+	if len(name) == 0 {
 		return fmt.Errorf("please provide an area name or id")
 	}
 	var explorePokemon api.ExplorePokemon

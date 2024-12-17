@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"pokedexgo/internal/api"
 	"strings"
 )
 
@@ -19,6 +20,7 @@ type Config struct {
 
 var commands map[string]cliCommand
 var configPtr = &Config{}
+var pokedex = make(map[string]api.Pokemon)
 
 func init() {
 	commands = map[string]cliCommand{
@@ -46,6 +48,11 @@ func init() {
 			name:        "explore",
 			description: "Displays the names of Pokemon that can be found in a specific area. --explore <area> ",
 			callback:    commandExplore,
+		},
+		"catch": {
+			name:        "catch",
+			description: "Catch a Pokemon. --catch <pokemon name>",
+			callback:    commandCatch,
 		},
 	}
 }
